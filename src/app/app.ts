@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SightingFormComponent } from './components/sighting-form/sighting-form.component/sighting-form.component';
 import { SightingListComponent } from './components/sighting-form/sighting-list.component/sighting-list.component';
-import { StatisticsPanelComponent } from './components/sighting-form/sighting-panel.component/sighting-panel.component';
+import { StatisticsPanelComponent } from './components/sighting-form/sighting-panel.component/statistics-panel.component';
 
 @Component({
   selector: 'app-root',

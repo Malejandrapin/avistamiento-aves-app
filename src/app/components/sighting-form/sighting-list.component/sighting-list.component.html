@@ -29,6 +29,7 @@
         <th>Ubicación</th>
         <th>Cantidad</th>
         <th>Observador</th>
+        <th>Habitat</th>
         <th></th>
       </tr>
     </thead>
@@ -37,15 +38,15 @@
         <td>{{ sighting.species.commonName }}</td>
         <td>{{ sighting.observeAt | date: 'short' }}</td>
         <td>
-          <ng-container *ngIf="sighting.location.type === 'text'; else coords">
+          @if (sighting.location.type === 'location-coordinates') {
+            {{ sighting.location.coordinates.latitude }}, {{ sighting.location.coordinates.longitude }}
+          } @else {
             {{ sighting.location.description }}
-          </ng-container>
-          <ng-template #coords>
-            {{ sighting.location.location-coordinates.latitude }}, {{ sighting.location.location-coordinates.longitude }}
-          </ng-template>
+          }
         </td>
-        <td>{{ sighting.individualCount }} ({{ sighting.flockSizeCategory }})</td>
+        <td>{{ sighting.individualCount }} ({{ sighting.flockSize }})</td>
         <td>{{ sighting.observer.name }}</td>
+        <td>{{ sighting.habitat }}</td>
         <td><button type="button" (click)="remove(sighting.id)">Eliminar</button></td>
       </tr>
       <tr *ngIf="!sightings.length">
