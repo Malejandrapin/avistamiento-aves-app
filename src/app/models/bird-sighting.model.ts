@@ -35,51 +35,18 @@ export class BirdSighting {
         this._habitat = data.habitat;
         this._notes = data.notes;
     }
-
-    get id(): string {
-        return this._id;
-    }
-
-    get species(): Species {
-        return this._species;
-    }
-
-    get observeAt(): Date {
-        return this._observeAt;
-    }
-
-    get location(): SightingLocation {
-        return this._location;
-    }
-
-    get individualCount(): number {
-        return this._individualCount;
-    }
-
-    get observer(): Observer {
-        return this._observer;
-    }
-
-    get habitat(): HabitatType | undefined {
-        return this._habitat;
-    }
-    get notes(): string | undefined {
-        return this._notes;
-    }
+    
+    get id(): string { return this._id; }
+    get species(): Species { return this._species; }
+    get observeAt(): Date { return this._observeAt; }
+    get location(): SightingLocation { return this._location; }
+    get individualCount(): number { return this._individualCount; }
+    get observer(): Observer { return this._observer; }
+    get habitat(): HabitatType | undefined { return this._habitat; }
+    get notes(): string | undefined { return this._notes; }
 
     get flockSize(): Flocksizecategory {
         return deriveFlockSize(this._individualCount)
     }
-    toPlainObject(): BirdSightingData {
-        return {
-            id: this._id,
-            species: this._species,
-            observeAt: this.observeAt,
-            location: this._location,
-            individualCount: this._individualCount,
-            observer: this._observer,
-            habitat: this._habitat,
-            notes: this._notes,
-        };
-    }
+ 
 }

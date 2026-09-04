@@ -20,9 +20,9 @@
     </div>
 
     <div class="field">
-        <label>Estado de conservación (opcional)</label>
+        <label>Estado de conservación *</label>
         <select formControlName="conservationStatus">
-            <option value="">-- No especificado --</option>
+            <option value="">-- Seleccione --</option>
             <option *ngFor="let status of conservationStatus" [value]="status">{{ status }}</option>
         </select>
     </div>
@@ -35,17 +35,17 @@
     <div class="field">
         <label>Tipo de ubicación *</label>
         <select formControlName="locationType">
-            <option value="text">Texto libre</option>
+            <option value="text">Descripción</option>
             <option value="coordinates">Coordenadas</option>
         </select>
     </div>
 
-    <div class="field" *ngIf="form.value.locationType === 'text'">
+    <div class="field" *ngIf="sightingForm.value.locationType === 'text'">
         <label>Descripción de la ubicación</label>
         <input formControlName="locationDescription" type="text" />
     </div>
 
-    <ng-container *ngIf="form.value.locationType === 'coordinates'">
+    <ng-container *ngIf="sightingForm.value.locationType === 'coordinates'">
         <div class="field">
             <label>Latitud</label>
             <input formControlName="latitude" type="number" step="any" />
@@ -64,6 +64,14 @@
     <div class="field">
         <label>Observador *</label>
         <input formControlName="observerName" type="text" />
+    </div>
+
+       <div class="field">
+        <label>Tipo de habitat *</label>
+        <select formControlName="habitatType">
+            <option value="">-- Seleccione --</option>
+            <option *ngFor="let typeHabitat of habitatType" [value]="typeHabitat">{{ typeHabitat }}</option>
+        </select>
     </div>
 
     <div class="field">

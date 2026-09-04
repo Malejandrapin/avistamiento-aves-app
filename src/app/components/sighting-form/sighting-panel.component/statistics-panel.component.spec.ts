@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { StatisticsPanelComponent } from './statistics-panel.component';
+
+
+describe('StatisticsPanelComponent', () => {
+  let component: StatisticsPanelComponent;
+  let fixture: ComponentFixture<StatisticsPanelComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [StatisticsPanelComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(StatisticsPanelComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
