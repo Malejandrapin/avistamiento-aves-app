@@ -1,2 +1,8 @@
 
-<router-outlet />
+<main style="max-width: 900px; margin: 0 auto; padding: 1.5rem;">
+  <h1>Registro de Avistamientos de Aves</h1>
+
+  <app-sighting-form (registered)="onRegistered()"></app-sighting-form>
+  <app-sighting-list [refreshTrigger]="refreshTrigger"></app-sighting-list>
+  <app-statistics-panel [refreshTrigger]="refreshTrigger"></app-statistics-panel>
+</main>

@@ -1,12 +1,20 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { SightingFormComponent } from './components/sighting-form/sighting-form.component/sighting-form.component';
+import { SightingListComponent } from './components/sighting-form/sighting-list.component/sighting-list.component';
+import { StatisticsPanelComponent } from './components/sighting-form/sighting-panel.component/sighting-panel.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [SightingFormComponent, SightingListComponent, StatisticsPanelComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
-export class App {
-  protected readonly title = signal('avistamiento-de-aves-system');
+export class AppComponent {
+  /** Se incrementa cada vez que se registra un avistamiento, para refrescar lista y estadísticas. */
+  refreshTrigger = 0;
+
+  onRegistered(): void {
+    this.refreshTrigger++;
+  }
 }

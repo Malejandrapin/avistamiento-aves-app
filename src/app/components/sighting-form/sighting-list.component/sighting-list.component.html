@@ -1,0 +1,56 @@
+<div class="card">
+  <h2>Avistamientos registrados</h2>
+
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+    <div class="field">
+      <label>Filtrar por especie</label>
+      <input formControlName="species" type="text" />
+    </div>
+    <div class="field">
+      <label>Filtrar por observador</label>
+      <input formControlName="observerName" type="text" />
+    </div>
+    <div class="field">
+      <label>Desde</label>
+      <input formControlName="dateFrom" type="date" />
+    </div>
+    <div class="field">
+      <label>Hasta</label>
+      <input formControlName="dateTo" type="date" />
+    </div>
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Especie</th>
+        <th>Fecha</th>
+        <th>Ubicación</th>
+        <th>Cantidad</th>
+        <th>Observador</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sighting of sightings">
+        <td>{{ sighting.species.commonName }}</td>
+        <td>{{ sighting.observeAt | date: 'short' }}</td>
+        <td>
+          <ng-container *ngIf="sighting.location.type === 'text'; else coords">
+            {{ sighting.location.description }}
+          </ng-container>
+          <ng-template #coords>
+            {{ sighting.location.location-coordinates.latitude }}, {{ sighting.location.location-coordinates.longitude }}
+          </ng-template>
+        </td>
+        <td>{{ sighting.individualCount }} ({{ sighting.flockSizeCategory }})</td>
+        <td>{{ sighting.observer.name }}</td>
+        <td><button type="button" (click)="remove(sighting.id)">Eliminar</button></td>
+      </tr>
+      <tr *ngIf="!sightings.length">
+        <td colspan="6">No hay avistamientos que coincidan con el filtro.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

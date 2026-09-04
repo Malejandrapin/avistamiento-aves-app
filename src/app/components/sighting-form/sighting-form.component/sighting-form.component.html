@@ -1,0 +1,75 @@
+<form class="card" [formGroup]="sightingForm" (ngSubmit)="submit()">
+    <h2>Registrar avistamiento</h2>
+
+    <div class="error" *ngIf="errors.length">
+        <div>
+            @for(error of errors; track error){
+            <p>{{ error }}</p>
+            }
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Nombre común de la especie *</label>
+        <input formControlName="commonName" type="text" />
+    </div>
+
+    <div class="field">
+        <label>Nombre científico (opcional)</label>
+        <input formControlName="scientificName" type="text" />
+    </div>
+
+    <div class="field">
+        <label>Estado de conservación (opcional)</label>
+        <select formControlName="conservationStatus">
+            <option value="">-- No especificado --</option>
+            <option *ngFor="let status of conservationStatus" [value]="status">{{ status }}</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Fecha y hora *</label>
+        <input formControlName="observeAt" type="datetime-local" />
+    </div>
+
+    <div class="field">
+        <label>Tipo de ubicación *</label>
+        <select formControlName="locationType">
+            <option value="text">Texto libre</option>
+            <option value="coordinates">Coordenadas</option>
+        </select>
+    </div>
+
+    <div class="field" *ngIf="form.value.locationType === 'text'">
+        <label>Descripción de la ubicación</label>
+        <input formControlName="locationDescription" type="text" />
+    </div>
+
+    <ng-container *ngIf="form.value.locationType === 'coordinates'">
+        <div class="field">
+            <label>Latitud</label>
+            <input formControlName="latitude" type="number" step="any" />
+        </div>
+        <div class="field">
+            <label>Longitud</label>
+            <input formControlName="longitude" type="number" step="any" />
+        </div>
+    </ng-container>
+
+    <div class="field">
+        <label>Cantidad de individuos *</label>
+        <input formControlName="individualCount" type="number" min="1" />
+    </div>
+
+    <div class="field">
+        <label>Observador *</label>
+        <input formControlName="observerName" type="text" />
+    </div>
+
+    <div class="field">
+        <label>Notas adicionales (opcional)</label>
+        <textarea formControlName="notes" rows="2"></textarea>
+    </div>
+
+    <button type="submit">Registrar avistamiento</button>
+</form>

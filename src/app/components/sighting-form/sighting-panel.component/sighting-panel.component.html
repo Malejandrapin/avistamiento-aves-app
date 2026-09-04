@@ -1,0 +1,26 @@
+<div class="card">
+  <h2>Estadísticas</h2>
+
+  <p *ngIf="mostSighted">
+    Especie más avistada: <strong>{{ mostSighted.species }}</strong> ({{ mostSighted.count }} avistamientos)
+  </p>
+  <p>Total de individuos observados: <strong>{{ totalIndividuals }}</strong></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Especie</th>
+        <th>Avistamientos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of countsBySpecies">
+        <td>{{ item.species }}</td>
+        <td>{{ item.count }}</td>
+      </tr>
+      <tr *ngIf="!countsBySpecies.length">
+        <td colspan="2">Todavía no hay avistamientos registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

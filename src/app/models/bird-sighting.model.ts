@@ -5,7 +5,7 @@ import { Observer } from "./observer.model";
 import { Species } from "./species.model";
 
 export interface BirdSightingData {
-    id: string;
+    id?: string;
     species: Species;
     observeAt: Date;
     location: SightingLocation;
