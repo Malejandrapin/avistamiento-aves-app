@@ -4,6 +4,7 @@ import { SightingLocation } from "./location.model";
 import { Observer } from "./observer.model";
 import { Species } from "./species.model";
 
+
 export interface BirdSightingData {
     id?: string;
     species: Species;
@@ -12,6 +13,7 @@ export interface BirdSightingData {
     individualCount: number;
     observer: Observer;
     habitat?: HabitatType;
+    peso?: number;
     notes?: string;
 }
 
@@ -23,7 +25,9 @@ export class BirdSighting {
     private readonly _individualCount: number;
     private readonly _observer: Observer;
     private readonly _habitat?: HabitatType;
+    private readonly _peso?: number;
     private readonly _notes?: string;
+    private readonly _capabilities: string[];
 
     constructor(id: string, data: BirdSightingData) {
         this._id = id;
@@ -33,7 +37,10 @@ export class BirdSighting {
         this._individualCount = data.individualCount;
         this._observer = data.observer;
         this._habitat = data.habitat;
+        this._peso = data.peso;
         this._notes = data.notes;
+        this._capabilities = Object.getOwnPropertyNames(Object.getPrototypeOf(data))
+            .filter((method) => method !== 'constructor');
     }
     
     get id(): string { return this._id; }
@@ -43,7 +50,9 @@ export class BirdSighting {
     get individualCount(): number { return this._individualCount; }
     get observer(): Observer { return this._observer; }
     get habitat(): HabitatType | undefined { return this._habitat; }
+    get peso(): number | undefined { return this._peso; }
     get notes(): string | undefined { return this._notes; }
+    get capabilities(): string[] { return [...this._capabilities]; }
 
     get flockSize(): Flocksizecategory {
         return deriveFlockSize(this._individualCount)

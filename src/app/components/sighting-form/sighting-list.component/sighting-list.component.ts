@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BirdSighting } from '../../../models/bird-sighting.model';
@@ -29,6 +29,11 @@ filterForm;
     dateFrom: [''],
     dateTo: [''],
   });
+
+    effect(() => {
+      this.sightingService.changes();
+      this.applyFilters();
+    });
 
     this.applyFilters();
   }

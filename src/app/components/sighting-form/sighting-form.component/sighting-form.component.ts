@@ -1,6 +1,7 @@
 import { Component, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BirdSightingData } from '../../../models/bird-sighting.model';
 import { Conservationstatus } from '../../../models/conservationstatus';
 import { SightingService } from '../../../services/sighting-service';
@@ -25,7 +26,7 @@ export class SightingFormComponent {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly sightingService: SightingService
+    private readonly sightingService: SightingService,
   ) {
      this.sightingForm = this.formBuilder.group({
     commonName: ['', Validators.required],

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { SightingFormComponent } from './components/sighting-form/sighting-form.component/sighting-form.component';
+import { RouterOutlet } from '@angular/router';
 import { SightingListComponent } from './components/sighting-form/sighting-list.component/sighting-list.component';
 import { StatisticsPanelComponent } from './components/sighting-form/sighting-panel.component/statistics-panel.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SightingFormComponent, SightingListComponent, StatisticsPanelComponent],
+  imports: [RouterOutlet, SightingListComponent, StatisticsPanelComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

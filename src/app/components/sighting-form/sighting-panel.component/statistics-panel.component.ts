@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SightingService } from '../../../services/sighting-service';
 import { SpeciesCount, StatisticsService } from '../../../services/statistics-service';
@@ -10,28 +10,22 @@ import { SpeciesCount, StatisticsService } from '../../../services/statistics-se
   templateUrl: './statistics-panel.component.html',
   styleUrl: './statistics-panel.component.scss',
 })
-export class StatisticsPanelComponent implements OnChanges {
+export class StatisticsPanelComponent {
   @Input() refreshTrigger = 0;
 
-  countsBySpecies: SpeciesCount[] = [];
-  mostSighted?: SpeciesCount;
-  totalIndividuals = 0;
+  readonly statistics = computed(() => {
+    this.sightingService.changes();
+    const sightings = this.sightingService.getAll();
+
+    return {
+      countsBySpecies: this.statisticsService.countBySpecies(sightings),
+      mostSighted: this.statisticsService.mostSightedSpecies(sightings),
+      totalIndividuals: this.statisticsService.totalIndividuals(sightings),
+    };
+  });
 
   constructor(
     private readonly sightingService: SightingService,
     private readonly statisticsService: StatisticsService
-  ) {
-    this.recompute();
-  }
-
-  ngOnChanges(): void {
-    this.recompute();
-  }
-
-  private recompute(): void {
-    const sightings = this.sightingService.getAll();
-    this.countsBySpecies = this.statisticsService.countBySpecies(sightings);
-    this.mostSighted = this.statisticsService.mostSightedSpecies(sightings);
-    this.totalIndividuals = this.statisticsService.totalIndividuals(sightings);
-  }
+  ) {}
 }

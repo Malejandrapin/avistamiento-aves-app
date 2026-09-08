@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, signal } from '@angular/core';
 import { BirdSighting, BirdSightingData } from '../models/bird-sighting.model';
 import { SightingFilterCriteria } from '../interfaces/sighting-filter.interface';
 import { FilterBuilder } from '../utils/generic-filter.util';
@@ -15,6 +15,7 @@ import { SightingRepository } from '../interfaces/sighting-repository.interface'
 @Injectable({ providedIn: 'root' })
 export class SightingService {
   private readonly sightingValidator = new SightingValidator();
+  readonly changes = signal(0);
 
   constructor(@Inject(SIGHTING_REPOSITORY) private readonly sightingRepository: SightingRepository) {}
 
@@ -22,7 +23,9 @@ export class SightingService {
     this.sightingValidator.validate(data);
     const id = crypto.randomUUID();
     const sighting = new BirdSighting(id, data);
-    return this.sightingRepository.save(sighting);
+    const saved = this.sightingRepository.save(sighting);
+    this.changes.update((value) => value + 1);
+    return saved;
   }
 
   getAll(): BirdSighting[] {
@@ -30,7 +33,11 @@ export class SightingService {
   }
 
   remove(id: string): boolean {
-    return this.sightingRepository.delete(id);
+    const removed = this.sightingRepository.delete(id);
+    if (removed) {
+      this.changes.update((value) => value + 1);
+    }
+    return removed;
   }
 
   find(criteria: SightingFilterCriteria): BirdSighting[] {

@@ -30,6 +30,7 @@
         <th>Cantidad</th>
         <th>Observador</th>
         <th>Habitat</th>
+        <th>Capacidades</th>
         <th></th>
       </tr>
     </thead>
@@ -47,10 +48,11 @@
         <td>{{ sighting.individualCount }} ({{ sighting.flockSize }})</td>
         <td>{{ sighting.observer.name }}</td>
         <td>{{ sighting.habitat }}</td>
+        <td>{{ sighting.capabilities.join(', ') }}</td>
         <td><button type="button" (click)="remove(sighting.id)">Eliminar</button></td>
       </tr>
       <tr *ngIf="!sightings.length">
-        <td colspan="6">No hay avistamientos que coincidan con el filtro.</td>
+        <td colspan="8">No hay avistamientos que coincidan con el filtro.</td>
       </tr>
     </tbody>
   </table>
