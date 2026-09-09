@@ -1,15 +1,16 @@
-<form class="card" [formGroup]="pinguinoForm" (ngSubmit)="submit()">
-  <h2>Registrar pingüino</h2>
+<form class="card" [formGroup]="amazonicaForm" (ngSubmit)="submit()">
+  <h2>Registrar amazonica</h2>
   @if(errors.length){
   <div class="error">
     @for (error of errors; track error) { <p>{{ error }}</p> }
   </div>
-}
+  }
+
   <div class="field"><label>Nombre común *</label><input formControlName="commonName" type="text" /></div>
   <div class="field"><label>Nombre científico</label><input formControlName="scientificName" type="text" /></div>
   <div class="field">
     <label>Estado de conservación *</label>
-    <select formControlName="conservationStatus">
+   <select formControlName="conservationStatus">
       <option value="">-- Seleccione --</option>
       @for(status of conservationStatus; track status){
       <option [value]="status">{{ status }}</option>
@@ -24,10 +25,10 @@
       <option value="coordinates">Coordenadas</option>
     </select>
   </div>
-  @if(pinguinoForm.value.locationType === 'text'){
+ @if(amazonicaForm.value.locationType === 'text'){
   <div class="field"><label>Descripción de la ubicación</label><input formControlName="locationDescription"
       type="text" /></div>}
-  @if(pinguinoForm.value.locationType === 'coordinates'){
+  @if(amazonicaForm.value.locationType === 'coordinates'){
   <div class="field"><label>Latitud</label><input formControlName="latitude" type="number" step="any" /></div>
   <div class="field"><label>Longitud</label><input formControlName="longitude" type="number" step="any" /></div>
   }
@@ -36,7 +37,7 @@
   <div class="field"><label>Observador *</label><input formControlName="observerName" type="text" /></div>
   <div class="field">
     <label>Tipo de hábitat *</label>
-    <select formControlName="habitatType">
+     <select formControlName="habitatType">
       <option value="">-- Seleccione --</option>
       @for(type of habitatType; track type){
       <option [value]="type">{{ type }}</option>
@@ -45,8 +46,8 @@
   </div>
   <div class="field"><label>Peso en kilogramos *</label><input formControlName="peso" type="number" min="0.001"
       step="0.001" /></div>
-  <div class="field">
-    <strong>Capacidades del pingüino</strong>
+ <div class="field">
+    <strong>Capacidades del ave amazonica</strong>
     <ul>
       @for(behavior of behaviors; track behavior){
       <li>{{ behavior }}</li>
@@ -54,5 +55,5 @@
     </ul>
   </div>
   <div class="field"><label>Notas adicionales</label><textarea formControlName="notes" rows="2"></textarea></div>
-  <button type="submit">Registrar pingüino</button>
+  <button type="submit">Registrar ave amazonica</button>
 </form>

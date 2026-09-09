@@ -25,9 +25,18 @@ export const routes: Routes = [
                 loadComponent: () => import('./components/aguila-form/aguila-form.component').then(m => m.AguilaFormComponent)
             },
             {
-                path: '**',
-                redirectTo: 'bird'
+                path: 'gaviota',
+                loadComponent: () => import('./components/gaviota-form/gaviota-form.component').then(m => m.GaviotaFormComponent)
+            },
+            {
+                path: 'amazonica',
+                loadComponent: () => import('./components/amazonica-form/amazonica-form.component').then(m => m.AmazonicaFormComponent)
+            },
+            {
+                path: 'nocturna',
+                loadComponent: () => import('./components/nocturna-form/nocturna-form.component').then(m => m.NocturnaFormComponent)
             }
+
         ]
     }
 ];

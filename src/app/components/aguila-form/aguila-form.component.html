@@ -1,40 +1,57 @@
 <form class="card" [formGroup]="aguilaForm" (ngSubmit)="submit()">
   <h2>Registrar aguila</h2>
-
-  <div class="error" *ngIf="errors.length">
+  @if(errors.length){
+  <div class="error">
     @for (error of errors; track error) { <p>{{ error }}</p> }
   </div>
+  }
 
   <div class="field"><label>Nombre común *</label><input formControlName="commonName" type="text" /></div>
   <div class="field"><label>Nombre científico</label><input formControlName="scientificName" type="text" /></div>
   <div class="field">
     <label>Estado de conservación *</label>
-    <select formControlName="conservationStatus">
+   <select formControlName="conservationStatus">
       <option value="">-- Seleccione --</option>
-      <option *ngFor="let status of conservationStatus" [value]="status">{{ status }}</option>
+      @for(status of conservationStatus; track status){
+      <option [value]="status">{{ status }}</option>
+      }
     </select>
   </div>
   <div class="field"><label>Fecha y hora *</label><input formControlName="observeAt" type="datetime-local" /></div>
   <div class="field">
     <label>Tipo de ubicación *</label>
-    <select formControlName="locationType"><option value="text">Descripción</option><option value="coordinates">Coordenadas</option></select>
+    <select formControlName="locationType">
+      <option value="text">Descripción</option>
+      <option value="coordinates">Coordenadas</option>
+    </select>
   </div>
-  <div class="field" *ngIf="aguilaForm.value.locationType === 'text'"><label>Descripción de la ubicación</label><input formControlName="locationDescription" type="text" /></div>
-  <ng-container *ngIf="aguilaForm.value.locationType === 'coordinates'">
-    <div class="field"><label>Latitud</label><input formControlName="latitude" type="number" step="any" /></div>
-    <div class="field"><label>Longitud</label><input formControlName="longitude" type="number" step="any" /></div>
-  </ng-container>
-  <div class="field"><label>Cantidad de individuos *</label><input formControlName="individualCount" type="number" min="1" /></div>
+ @if(aguilaForm.value.locationType === 'text'){
+  <div class="field"><label>Descripción de la ubicación</label><input formControlName="locationDescription"
+      type="text" /></div>}
+  @if(aguilaForm.value.locationType === 'coordinates'){
+  <div class="field"><label>Latitud</label><input formControlName="latitude" type="number" step="any" /></div>
+  <div class="field"><label>Longitud</label><input formControlName="longitude" type="number" step="any" /></div>
+  }
+  <div class="field"><label>Cantidad de individuos *</label><input formControlName="individualCount" type="number"
+      min="1" /></div>
   <div class="field"><label>Observador *</label><input formControlName="observerName" type="text" /></div>
   <div class="field">
     <label>Tipo de hábitat *</label>
-    <select formControlName="habitatType"><option value="">-- Seleccione --</option><option *ngFor="let type of habitatType" [value]="type">{{ type }}</option></select>
+     <select formControlName="habitatType">
+      <option value="">-- Seleccione --</option>
+      @for(type of habitatType; track type){
+      <option [value]="type">{{ type }}</option>
+      }
+    </select>
   </div>
-  <div class="field"><label>Peso en kilogramos *</label><input formControlName="peso" type="number" min="0.001" step="0.001" /></div>
-  <div class="field">
+  <div class="field"><label>Peso en kilogramos *</label><input formControlName="peso" type="number" min="0.001"
+      step="0.001" /></div>
+ <div class="field">
     <strong>Capacidades del águila</strong>
     <ul>
-      <li *ngFor="let behavior of behaviors">{{ behavior }}</li>
+      @for(behavior of behaviors; track behavior){
+      <li>{{ behavior }}</li>
+      }
     </ul>
   </div>
   <div class="field"><label>Notas adicionales</label><textarea formControlName="notes" rows="2"></textarea></div>

@@ -1,12 +1,11 @@
 import { Component, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { BirdSightingData } from '../../../models/bird-sighting.model';
 import { Conservationstatus } from '../../../models/conservationstatus';
 import { SightingService } from '../../../services/sighting-service';
 import { ValidationError } from '../../../validators/validation-error';
 import { HabitatType } from '../../../models/habitat-type';
+import { Ave } from '../../../interfaces/clasesAves/ave';
 
 @Component({
   selector: 'app-sighting-form',
@@ -16,12 +15,13 @@ import { HabitatType } from '../../../models/habitat-type';
   styleUrl: './sighting-form.component.scss',
 })
 export class SightingFormComponent {
-  registered = output<BirdSightingData>();
+  registered = output<Ave>();
 
   readonly conservationStatus = Object.values(Conservationstatus);
   readonly habitatType = Object.values(HabitatType);
   errors: string[] = [];
-
+  readonly behaviors = Object.getOwnPropertyNames(Ave.prototype)
+    .filter((method) => method !== 'constructor');
   readonly sightingForm;
 
   constructor(
@@ -80,28 +80,27 @@ export class SightingFormComponent {
       }
     }
 
-    const data: BirdSightingData = {
-      species: {
+    const data = new Ave(
+      {
         commonName: raw.commonName ?? '',
         scientificName: raw.scientificName || undefined,
         conservationstatus: (raw.conservationStatus as Conservationstatus) || undefined,
       },
       observeAt,
-      location:
-        raw.locationType === 'coordinates'
-          ? {
-              type: 'location-coordinates',
-              coordinates: {
-                latitude: raw.latitude ?? NaN,
-                longitude: raw.longitude ?? NaN,
-              },
-            }
-          : { type: 'text', description: raw.locationDescription ?? '' },
-      individualCount: raw.individualCount ?? 0,
-      observer: { name: raw.observerName ?? '' },
-      habitat: (raw.habitatType as HabitatType) || undefined,
-      notes: raw.notes || undefined,
-    };
+      raw.locationType === 'coordinates'
+        ? {
+            type: 'location-coordinates',
+            coordinates: {
+              latitude: raw.latitude ?? NaN,
+              longitude: raw.longitude ?? NaN,
+            },
+          }
+        : { type: 'text', description: raw.locationDescription ?? '' },
+      raw.individualCount ?? 0,
+      { name: raw.observerName ?? '' },
+      raw.habitatType as HabitatType,
+      0,
+    );
 
     try {
       this.sightingService.register(data);

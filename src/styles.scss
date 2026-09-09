@@ -8,18 +8,28 @@ body {
   margin: 0;
   background: #f4f6f5;
   color: #1f2a24;
+  overflow-x: hidden;
 }
 
 .card {
   background: #eae5e5;
   border-radius: 10px;
-  padding: 1.25rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   margin-bottom: 1.5rem;
 }
 
+form.card {
+  width: min(100%, 720px);
+}
+
 h1, h2, h3 {
   margin-top: 0;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 input, select, textarea, button {
@@ -34,9 +44,32 @@ input, select, textarea, button {
 }
 
 .field input, .field select, .field textarea {
+  width: 100%;
+  min-height: 2.75rem;
   padding: 0.5rem;
   border: 1px solid #cbd5cf;
   border-radius: 6px;
+}
+
+.field textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.field ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .card {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
 }
 
 .error {

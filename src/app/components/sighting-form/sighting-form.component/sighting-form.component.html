@@ -1,14 +1,11 @@
 <form class="card" [formGroup]="sightingForm" (ngSubmit)="submit()">
     <h2>Registrar avistamiento</h2>
 
-    <div class="error" *ngIf="errors.length">
-        <div>
-            @for(error of errors; track error){
-            <p>{{ error }}</p>
-            }
-        </div>
+    @if(errors.length){
+    <div class="error">
+        @for (error of errors; track error) { <p>{{ error }}</p> }
     </div>
-
+    }
     <div class="field">
         <label>Nombre común de la especie *</label>
         <input formControlName="commonName" type="text" />
@@ -23,11 +20,10 @@
         <label>Estado de conservación *</label>
         <select formControlName="conservationStatus">
             <option value="">-- Seleccione --</option>
-            <option *ngFor="let status of conservationStatus" [value]="status">{{ status }}</option>
+            @for(status of conservationStatus; track status){
+            <option [value]="status">{{ status }}</option>
+            }
         </select>
-    </div>
-
-    <div class="field">
         <label>Fecha y hora *</label>
         <input formControlName="observeAt" type="datetime-local" />
     </div>
@@ -40,21 +36,13 @@
         </select>
     </div>
 
-    <div class="field" *ngIf="sightingForm.value.locationType === 'text'">
-        <label>Descripción de la ubicación</label>
-        <input formControlName="locationDescription" type="text" />
-    </div>
-
-    <ng-container *ngIf="sightingForm.value.locationType === 'coordinates'">
-        <div class="field">
-            <label>Latitud</label>
-            <input formControlName="latitude" type="number" step="any" />
-        </div>
-        <div class="field">
-            <label>Longitud</label>
-            <input formControlName="longitude" type="number" step="any" />
-        </div>
-    </ng-container>
+    @if(sightingForm.value.locationType === 'text'){
+    <div class="field"><label>Descripción de la ubicación</label><input formControlName="locationDescription"
+            type="text" /></div>}
+    @if(sightingForm.value.locationType === 'coordinates'){
+    <div class="field"><label>Latitud</label><input formControlName="latitude" type="number" step="any" /></div>
+    <div class="field"><label>Longitud</label><input formControlName="longitude" type="number" step="any" /></div>
+    }
 
     <div class="field">
         <label>Cantidad de individuos *</label>
@@ -66,13 +54,23 @@
         <input formControlName="observerName" type="text" />
     </div>
 
-       <div class="field">
+    <div class="field">
         <label>Tipo de habitat *</label>
         <select formControlName="habitatType">
             <option value="">-- Seleccione --</option>
-            <option *ngFor="let typeHabitat of habitatType" [value]="typeHabitat">{{ typeHabitat }}</option>
+            @for(type of habitatType; track type){
+            <option [value]="type">{{ type }}</option>
+            }
         </select>
     </div>
+ <div class="field">
+    <strong>Capacidades del ave</strong>
+    <ul>
+      @for(behavior of behaviors; track behavior){
+      <li>{{ behavior }}</li>
+      }
+    </ul>
+  </div>
 
     <div class="field">
         <label>Notas adicionales (opcional)</label>
